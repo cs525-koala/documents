@@ -31,7 +31,8 @@ parameterizable scheduler, but targeting Eucalyptus which has fundamentally
 different requirements.  Additionally our work focuses on building a tool that
 helps you find the optimal parameters, not just the scheduling framework itself.
 
-Systems like those in~\cite{Zaharia} and ~\cite{Mantri} are interesting\ldots
+%% XXX: Talk about the other two papers from class?
+%% Systems like those in~\cite{Zaharia} and ~\cite{Mantri} are interesting\ldots
 
 %% Zhao work on adaptive load-balancing.
 A problem related to optimizing scheduling is that of load-balanacing.  Zhao,
@@ -42,3 +43,10 @@ scheduler to fit the needs and success metrics unique to each cluster, which is
 a fundementally different problem.  Additionally they focused on a distributed
 algorithm forbidding the use of a centralized scheduling node, which is not a
 limitation we impose in our system.
+
+
+% GA-based approaches:
+
+%% Topology-Aware Resource Allocation for Data-Intensive Workloads
+
+A number of researches have applied genetic algorithms (GA) to the task of scheduling on the cloud.  In \cite{Lee} they improved upon Eucalyptus's scheduling algorithms with a focus on topology sensitivity using GA.  They claim in their future work they would be interested in machine learning based systems, which is what we intend to do.  Unlike us, they focus not on just the data-intensive workload produced from MapReduce tasks.
