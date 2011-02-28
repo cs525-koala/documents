@@ -9,8 +9,10 @@
 
 %% Eucalyptus scheduler, talk about it here
 The baseline of our work is the default set of schedulers contained in
-Eucalyptus~\cite{Eucalyptus}.  Eucalyptus ships with two main schedulers: greedy
-and round-robin.  Greedy will simply use the first available node that can run a
+Eucalyptus~\cite{Eucalyptus}.  Eucalyptus provides an EC2/S3 %~\cite{EC2,S3}
+compatible cloud, using virtualization technologies such as Xen~\cite{Xen} and
+KVM/QEMU~\cite{QEMU}, Eucalyptus ships with two main schedulers: greedy and
+round-robin.  Greedy will simply use the first available node that can run a
 given job, and round-robin each time will find the \emph{next} suitable node.
 They also implement a power-save scheduler based on the greedy scheduler that
 attempts to shut down idle nodes to help conserve power.  These are all basic
