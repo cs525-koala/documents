@@ -13,10 +13,10 @@ Eucalyptus~\cite{Eucalyptus}.  Eucalyptus ships with two main schedulers: greedy
 and round-robin.  Greedy will simply use the first available node that can run a
 given job, and round-robin each time will find the \emph{next} suitable node.
 They also implement a power-save scheduler based on the greedy scheduler that
-attempts to shut down idle nodes to help conserve power.  These are all
-basic scheduling algorithms that are simple and generic.  However we believe
-that especially with respect to a given workload much more effective schedulers
-can be useful and intend to explore that problem space.
+attempts to shut down idle nodes to help conserve power.  These are all basic
+scheduling algorithms that are simple and generic.  However we believe that
+especially with respect to a given workload much more effective schedulers can
+be useful and intend to explore that problem space.
 
 %% Papers we read for class.
 Researchers from Microsoft built Quincy~\cite{Quincy}, which is a cloud
@@ -33,6 +33,6 @@ helps you find the optimal parameters.
 Mantri~\cite{Mantri}.
 
 %% Zhao work on adaptive load-balancing.
-A problem related to optimizing scheduling is that of load-balanacing.  Zhao, et
-. all~\cite{Zhao} developed an adaptive load-balancing system algorithm
-``COMPARE\_AND\_BALANCE''.
+A problem related to optimizing scheduling is that of load-balanacing.  Zhao,
+et. al ~\cite{Zhao} developed an adaptive load-balancing system algorithm for
+Eucalyptus called ``COMPARE\_AND\_BALANCE''.
