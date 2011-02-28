@@ -20,9 +20,12 @@ can be useful and intend to explore that problem space.
 
 %% Papers we read for class.
 Researchers from Microsoft built Quincy~\cite{Quincy}, which is a cloud
-scheduling framework.  Quincy maps the task of job scheduling to a min-cost flow
-problem in which they use various cost functions to represent data locality,
-cost of killing a task, and more.
+scheduling framework for Dryad and MapReduce-like systems.  By reducing the
+scheduling problem to a customizable min-cost flow problem they expose a number
+of knobs that they found were rather effective in making an effective scheduler
+for various workloads.  In our project, we will build a similarly
+parameterizable scheduler, but targeting Eucalyptus which has fundamentally
+different requirements.
 
 ``Improving MapReduce performance in heterogeneous systems'' Zaharia~\cite{Zaharia}.
 
