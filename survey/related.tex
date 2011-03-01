@@ -9,8 +9,10 @@
 
 %% Eucalyptus scheduler, talk about it here
 The baseline of our work is the default set of schedulers contained in
-Eucalyptus~\cite{Eucalyptus}.  Eucalyptus ships with two main schedulers: greedy
-and round-robin.  Greedy will simply use the first available node that can run a
+Eucalyptus~\cite{Eucalyptus}.  Eucalyptus provides an EC2/S3 ~\cite{EC2,S3}
+compatible cloud, using virtualization technologies such as Xen~\cite{Xen} and
+KVM/QEMU~\cite{QEMU}, Eucalyptus ships with two main schedulers: greedy and
+round-robin.  Greedy will simply use the first available node that can run a
 given job, and round-robin each time will find the \emph{next} suitable node.
 They also implement a power-save scheduler based on the greedy scheduler that
 attempts to shut down idle nodes to help conserve power.  These are all basic
@@ -31,7 +33,15 @@ parameterizable scheduler, but targeting Eucalyptus which has fundamentally
 different requirements.  Additionally our work focuses on building a tool that
 helps you find the optimal parameters, not just the scheduling framework itself.
 
-Systems like those in~\cite{Zaharia} and ~\cite{Mantri} are interesting\ldots
+Zaharia et al. developed their LATE scheduler for MapReduce to improve task
+speculation on heterogenous systems~\cite{Zaharia}.  This contrasts our work
+because we target not just the service level (MapReduce) but the infrastructure
+itself (at the VM level), where speculation is not traditionally used.
+Similarly Mantri et al.~\cite{Mantri} focus on the outliers, the stragglers, in
+a MapReduce system to improve performance.  Mantri et al. focus on exploring the
+cause of an outlier through monitoring and other methods to take appropriate
+action and free those resources.  Early detection of outliers is key and is
+effective for MapReduce workloads.
 
 %% Zhao work on adaptive load-balancing.
 A problem related to optimizing scheduling is that of load-balanacing.  Zhao,
@@ -42,3 +52,37 @@ scheduler to fit the needs and success metrics unique to each cluster, which is
 a fundementally different problem.  Additionally they focused on a distributed
 algorithm forbidding the use of a centralized scheduling node, which is not a
 limitation we impose in our system.
+
+%% MLN + Internal VM polity + Migration
+
+Begnum et all \cite{Begnum} have experimented with moving virtual machine policy
+inside the virtual machine itself.  The benefits of this include improved
+portability and aptitude for live-migration.  Additionally, this increases the
+ease at which virtual machines can move between non-homogeneous systems within a
+cloud.  They worked with MLN (Manage Large Networks), an open source tool
+providing atomic operations to enable the management of large quantities of a
+variety of virtual machines \cite{Xen,UML,VMware}.  It provides an interface in
+the form of a configuration language.
+
+% GA-based approaches:
+
+%% Topology-Aware Resource Allocation for Data-Intensive Workloads
+A number of researchers have applied genetic algorithms (GA) to the task of
+dynamically scheduling on the cloud~\cite{Lee,Zhong,Chenhong}.  In~\cite{Lee}
+they improved upon Eucalyptus's scheduling algorithms with a focus on topology
+sensitivity using GA.  They claim in their future work they would be interested
+in machine learning based systems, similar to our system.  Additionally they
+focused on the data-intensive workload produced from MapReduce tasks. Zhong, et
+al.~\cite{Zhong} built their Improved Genetic Algorithm (IGA) to improve the
+scheduling algorithms commonly used in open-source clouds.
+
+
+%% Scientific workflows:
+
+Some scheduling algorithms focus on particular workloads.  While some
+researchers only consider MapReduce-like loads, others focus on scientific
+workloads \cite{Juve,Simmhan,Hoffa}.  By gathering basic characteristics of the
+workload, Simmhan et al.~\cite{Simmhan} build a \emph{blackbox} system to help
+schedule the workflow.  This is similar to our work, although we hope to
+determine the characteristics of the workflow experimentally, and not require
+them as inputs from the user.
