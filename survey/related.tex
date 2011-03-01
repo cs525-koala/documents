@@ -14,18 +14,18 @@ which uses virtualization technologies such as Xen~\cite{Xen},
 VMware~\cite{VMware} and KVM/QEMU~\cite{QEMU}, and provides an interface to
 EC2/S3 ~\cite{EC2,S3}.   Eucalyptus ships with two main scheduling algorithms: a
 greedy algorithm and a round-robin algorithm.  The greedy algorithm will use the
-first available node that can run a given job, and round-robin each time will
+first available node that can run a given job, and round-robin will
 find the \emph{next} suitable node.
 Eucalyptus also implements a power-saving scheduling algorithm based on the greedy scheduler that
 attempts to shut down idle nodes  in order to conserve power.  We believe that
-Eucalyptus could benefit with a more specialized scheduler, which takes
-additional information into account when scheduling virtual machines.
+Eucalyptus could benefit from a more specialized scheduler, which takes
+additional infomation into account when scheduling virtual machines.
 Additionally Eucalyptus does not allow live migration of allocated VMs, which
 prevents the exploration of additional scheduling enhancements.  We hope to
 address this as well in our work.
 
 %% Papers we read for class.
-Researchers from Microsoft built Quincy~\cite{Quincy}, which is a cloud
+Researchers from Microsoft built Quincy~\cite{Quincy}, a cloud
 scheduling framework for Dryad and MapReduce-like systems.  By reducing the
 scheduling problem to a customizable min-cost flow problem they expose a number
 of knobs that they found were rather effective in making an effective scheduler
