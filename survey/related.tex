@@ -1,12 +1,5 @@
 \section{Related}
 
-%% HOW TO ORGANIZE?! We are writing ~2 pages of related work, and are going to
-% have at _least_ 15 references... We need to find a way to group them and
-% present them in a somewhat connected manner.
-
-% For now, lets just talk about each paper and try to tie them together in the
-% next iteration.
-
 %% Eucalyptus scheduler, talk about it here
 The foundation of our work is the set of schedulers contained in
 Eucalyptus~\cite{Eucalyptus}.  Eucalyptus is a cloud computing infrastructure,
@@ -14,25 +7,24 @@ which uses virtualization technologies such as Xen~\cite{Xen},
 VMware~\cite{VMware} and KVM/QEMU~\cite{QEMU}, and provides an interface to
 EC2/S3 ~\cite{EC2,S3}.   Eucalyptus ships with two main scheduling algorithms: a
 greedy algorithm and a round-robin algorithm.  The greedy algorithm will use the
-first available node that can run a given job, and round-robin will
-find the \emph{next} suitable node.
-Eucalyptus also implements a power-saving scheduling algorithm based on the greedy scheduler that
-attempts to shut down idle nodes  in order to conserve power.  We believe that
-Eucalyptus could benefit from a more specialized scheduler, which takes
-additional infomation into account when scheduling virtual machines.
-Additionally Eucalyptus does not allow live migration of allocated VMs, which
-prevents the exploration of additional scheduling enhancements.  We hope to
-address this as well in our work.
+first available node that can run a given job, and round-robin will find the
+\emph{next} suitable node.  Eucalyptus also implements a power-saving scheduling
+algorithm based on the greedy scheduler that attempts to shut down idle nodes
+in order to conserve power.  We believe that Eucalyptus could benefit from a
+more specialized scheduler, which takes additional infomation into account when
+scheduling virtual machines.  Additionally Eucalyptus does not allow live
+migration of allocated VMs, which prevents the exploration of additional
+scheduling enhancements.  We hope to address this as well in our work.
 
 %% Papers we read for class.
-Researchers from Microsoft built Quincy~\cite{Quincy}, a cloud
-scheduling framework for Dryad and MapReduce-like systems.  By reducing the
-scheduling problem to a customizable min-cost flow problem they expose a number
-of knobs that they found were rather effective in making an effective scheduler
-for various workloads.  In our project, we will build a similarly
-parameterizable scheduler, but targeting Eucalyptus which has fundamentally
-different requirements.  Additionally our work focuses on building a tool that
-helps you find the optimal parameters, not just the scheduling framework itself.
+Researchers from Microsoft built Quincy~\cite{Quincy}, a cloud scheduling
+framework for Dryad and MapReduce-like systems.  By reducing the scheduling
+problem to a customizable min-cost flow problem they expose a number of knobs
+that they found were rather effective in making an effective scheduler for
+various workloads.  In our project, we will build a similarly parameterizable
+scheduler, but targeting Eucalyptus which has fundamentally different
+requirements.  Additionally our work focuses on building a tool that helps you
+find the optimal parameters, not just the scheduling framework itself.
 
 Zaharia et al. developed their LATE scheduler for MapReduce to improve task
 speculation on heterogeneous systems~\cite{Zaharia}.  This contrasts our work
@@ -45,8 +37,8 @@ action and free those resources.  Early detection of outliers is key and is
 effective for MapReduce workloads.
 
 %% Zhao work on adaptive load-balancing.
-A problem related to optimizing scheduling is that of load-balancing.  Zhao,
-et al. ~\cite{Zhao} developed an adaptive load-balancing system algorithm for
+A problem related to optimizing scheduling is that of load-balancing.  Zhao, et
+al.~\cite{Zhao} developed an adaptive load-balancing system algorithm for
 Eucalyptus called ``COMPARE\_AND\_BALANCE''.  This system focuses on
 load-balancing as the primary goal, while we hope to build a more general
 scheduler to fit the needs and success metrics unique to each cluster, which is
@@ -56,7 +48,7 @@ limitation we impose in our system.
 
 %% MLN + Internal VM polity + Migration
 
-Begnum et al. \cite{Begnum} have experimented with moving virtual machine policy
+Begnum et al.~\cite{Begnum} have experimented with moving virtual machine policy
 inside the virtual machine itself.  The benefits of this include improved
 portability and aptitude for live-migration.  Additionally, this increases the
 ease at which virtual machines can move between non-homogeneous systems within a
@@ -76,7 +68,6 @@ in machine learning based systems, similar to our system.  Additionally they
 focused on the data-intensive workload produced from MapReduce tasks. Zhong, et
 al.~\cite{Zhong} built their Improved Genetic Algorithm (IGA) to improve the
 scheduling algorithms commonly used in open-source clouds.
-
 
 %% Scientific workflows:
 
