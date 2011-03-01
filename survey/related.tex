@@ -1,12 +1,5 @@
 \section{Related}
 
-%% HOW TO ORGANIZE?! We are writing ~2 pages of related work, and are going to
-% have at _least_ 15 references... We need to find a way to group them and
-% present them in a somewhat connected manner.
-
-% For now, lets just talk about each paper and try to tie them together in the
-% next iteration.
-
 %% Eucalyptus scheduler, talk about it here
 The foundation of our work is the set of schedulers contained in
 Eucalyptus~\cite{Eucalyptus}.  Eucalyptus is a cloud computing infrastructure,
@@ -14,15 +7,14 @@ which uses virtualization technologies such as Xen~\cite{Xen},
 VMware~\cite{VMware} and KVM/QEMU~\cite{QEMU}, and provides an interface to
 EC2/S3 ~\cite{EC2,S3}.   Eucalyptus ships with two main scheduling algorithms: a
 greedy algorithm and a round-robin algorithm.  The greedy algorithm will use the
-first available node that can run a given job, and round-robin will
-find the \emph{next} suitable node.
-Eucalyptus also implements a power-saving scheduling algorithm based on the greedy scheduler that
-attempts to shut down idle nodes  in order to conserve power.  We believe that
-Eucalyptus could benefit from a more specialized scheduler, which takes
-additional infomation into account when scheduling virtual machines.
-Additionally Eucalyptus does not allow live migration of allocated VMs, which
-prevents the exporation of additional scheduling enhancements.  We hope to
-address this as well in our work.
+first available node that can run a given job, and round-robin will find the
+\emph{next} suitable node.  Eucalyptus also implements a power-saving scheduling
+algorithm based on the greedy scheduler that attempts to shut down idle nodes
+in order to conserve power.  We believe that Eucalyptus could benefit from a
+more specialized scheduler, which takes additional infomation into account when
+scheduling virtual machines.  Additionally Eucalyptus does not allow live
+migration of allocated VMs, which prevents the exploration of additional
+scheduling enhancements.  We hope to address this as well in our work.
 
 %% Papers we read for class.
 Researchers from Microsoft built Quincy~\cite{Quincy}, a cloud
@@ -53,7 +45,7 @@ limitation we impose in our system.
 
 %% MLN + Internal VM polity + Migration
 
-Begnum et all \cite{Begnum} have experimented with moving virtual machine policy
+Begnum et al.~\cite{Begnum} have experimented with moving virtual machine policy
 inside the virtual machine itself.  The benefits of this include improved
 portability and aptitude for live-migration.  Additionally, this increases the
 ease at which virtual machines can move between non-homogeneous systems within a
@@ -73,7 +65,6 @@ in machine learning based systems, similar to our system.  Additionally they
 focused on the data-intensive workload produced from MapReduce tasks. Zhong, et
 al.~\cite{Zhong} built their Improved Genetic Algorithm (IGA) to improve the
 scheduling algorithms commonly used in open-source clouds.
-
 
 %% Scientific workflows:
 
