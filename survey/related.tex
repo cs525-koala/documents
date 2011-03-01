@@ -53,6 +53,10 @@ a fundementally different problem.  Additionally they focused on a distributed
 algorithm forbidding the use of a centralized scheduling node, which is not a
 limitation we impose in our system.
 
+%% MLN + Internal VM polity + Migration
+
+Begnum et all \cite{Begnum} have experimented with moving virtual machine policy inside the virtual machine itself.  The benefits of this include improved portability and aptitude for live-migration.  Additionally, this increases the ease at which virtual machines can move between non-homogeneous systems within a cloud.  They worked with MLN (Manage Large Networks), an open source tool providing atomic operations to enable the management of large quantities of a variety of virtual machines \cite{XEN,UML,VMware}.  It provides an interface in the form of a configuration language.  
+
 % GA-based approaches:
 
 %% Topology-Aware Resource Allocation for Data-Intensive Workloads
