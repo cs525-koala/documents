@@ -8,19 +8,20 @@
 % next iteration.
 
 %% Eucalyptus scheduler, talk about it here
-The baseline of our work is the default set of schedulers contained in
-Eucalyptus~\cite{Eucalyptus}.  Eucalyptus provides an EC2/S3 ~\cite{EC2,S3}
-compatible cloud, using virtualization technologies such as Xen~\cite{Xen} and
-KVM/QEMU~\cite{QEMU}, Eucalyptus ships with two main schedulers: greedy and
-round-robin.  Greedy will simply use the first available node that can run a
-given job, and round-robin each time will find the \emph{next} suitable node.
-They also implement a power-save scheduler based on the greedy scheduler that
-attempts to shut down idle nodes to help conserve power.  These are all basic
-scheduling algorithms that are simple and generic.  However we believe that
-especially with respect to a given workload much more effective schedulers can
-be useful and intend to explore that problem space.  Additionally Eucalyptus's
-sechduling framework does not allow the live migration of VM's once they're
-allocated, preventing a more complicated scheduling algorithms.  We hope to
+The foundation of our work is the set of schedulers contained in
+Eucalyptus~\cite{Eucalyptus}.  Eucalyptus is a cloud computing infrastructure,
+which uses virtualization technologies such as Xen~\cite{Xen},
+VMware~\cite{VMware} and KVM/QEMU~\cite{QEMU}, and provides an interface to
+EC2/S3 ~\cite{EC2,S3}.   Eucalyptus ships with two main scheduling algorithms: a
+greedy algorithm and a round-robin algorithm.  The greedy algorithm will use the
+first available node that can run a given job, and round-robin each time will
+find the \emph{next} suitable node.
+Eucalyptus also implements a power-saveing scheduling algorithm based on the greedy scheduler that
+attempts to shut down idle nodes  in order to conserve power.  We believe that
+Eucalyptus could benefit with a more specialized scheduler, which takes
+additional infomation into account when scheduling virtual machines.
+Additionally Eucalyptus does not allow live migration of allocated VMs, which
+prevents the exporation of additional scheduling enhancements.  We hope to
 address this as well in our work.
 
 %% Papers we read for class.
