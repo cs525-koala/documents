@@ -26,31 +26,28 @@ address this as well in our work.
 
 %% Papers we read for class.
 Researchers from Microsoft built Quincy~\cite{Quincy}, a cloud
-scheduling framework for Dryad and MapReduce-like systems.  By reducing the
-scheduling problem to a customizable min-cost flow problem they expose a number
-of knobs that they found were rather effective in making an effective scheduler
-for various workloads.  In our project, we will build a similarly
-parameterizable scheduler, but targeting Eucalyptus which has fundamentally
-different requirements.  Additionally our work focuses on building a tool that
-helps you find the optimal parameters, not just the scheduling framework itself.
+scheduling framework for Dryad and MapReduce-like systems.  They reduced the
+scheduling to a min-cost problem in order to expose a variety of adjustable options.  They found these options were effective in tuning the scheduler to perform
+various workloads.  In our project, we will build a similarly
+parameterizable scheduler, but will target Eucalyptus, which has fundamentally
+different scheduling requirements.  Additionally our work focuses on building a tool that determines the optimal parameters, not just the scheduling framework itself.
 
-Zaharia et al. developed their LATE scheduler for MapReduce to improve task
+Zaharia et al. developed their LATE scheduler for MapReduce in order to improve task
 speculation on heterogenous systems~\cite{Zaharia}.  This contrasts our work
 because we target not just the service level (MapReduce) but the infrastructure
 itself (at the VM level), where speculation is not traditionally used.
-Similarly Mantri et al.~\cite{Mantri} focus on the outliers, the stragglers, in
-a MapReduce system to improve performance.  Mantri et al. focus on exploring the
+Similarly Mantri et al.~\cite{Mantri} focus on improving performance by better handling of stragglers  in
+a MapReduce system.  Mantri et al. focus on exploring the
 cause of an outlier through monitoring and other methods to take appropriate
-action and free those resources.  Early detection of outliers is key and is
+action and free those resources.  Early detection of outliers is key to their methodology and is
 effective for MapReduce workloads.
 
 %% Zhao work on adaptive load-balancing.
-A problem related to optimizing scheduling is that of load-balanacing.  Zhao,
+Load-balancing is a critical issue related to the optimized scheduling.  Zhao,
 et. al ~\cite{Zhao} developed an adaptive load-balancing system algorithm for
-Eucalyptus called ``COMPARE\_AND\_BALANCE''.  This system focuses on
+Eucalyptus called ``COMPARE\_AND\_BALANCE''.  Their system focuses on
 load-balancing as the primary goal, while we hope to build a more general
-scheduler to fit the needs and success metrics unique to each cluster, which is
-a fundementally different problem.  Additionally they focused on a distributed
+scheduler to fit the needs and success metrics unique to each cluster.  Additionally they focused on a distributed
 algorithm forbidding the use of a centralized scheduling node, which is not a
 limitation we impose in our system.
 
