@@ -1,0 +1,3 @@
+\section{Implementation}
+
+In the implementation of our project, we hit an unexpected roadblock.  Eucalyptus did not support live migration, a method for moving running VMs between nodes.  Unfortunately we had intended to utilize live migration heavily within our scheduler, so we set forth to implement it.  We modified Eucalyptus to support live migration.  This involved leveraging libvirt, a virtualizaton api, in order to perform the migration.  Additionally, extensive modification of Eucalyptus was required to communicate with libvert and to manage its state during migration.  
