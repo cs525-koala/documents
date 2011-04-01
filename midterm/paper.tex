@@ -1,0 +1,38 @@
+\documentclass[letterpaper,twocolumn,12pt]{article}
+\usepackage[margin=.95in]{geometry}
+\usepackage{times}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{mdwlist}
+
+\sloppy
+
+\title{Koala: Improved Scheduler Running on Eucalyptus}
+\author{\small Will Dietz, Kevin Larson\\
+\small \{wdietz2, klarson5\}@illinois.edu\\
+\small University of Illinois at Urbana Champaign}
+
+\date{}
+
+\pagestyle{plain}
+\pagenumbering{arabic}
+
+\begin{document}
+
+\maketitle
+
+% No abstract for introduction
+\input{abstract.tex}
+\input{intro.tex}
+\input{related.tex}
+\input{design.tex}
+\input{timeline.tex}
+
+% (Make the references in a smaller font)
+\footnotesize
+\bibliographystyle{abbrv}
+\bibliography{mybib}
+
+\normalsize
+\input{business.tex}
+\end{document}
