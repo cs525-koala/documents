@@ -6,7 +6,6 @@ Libvert, the Eucalyptus node controller, and the Eucalyptus cluster controllers 
 
 The very nature of migration involves slightly breaking the Eucalyptus model of communication between controllers.  Initially, nodes only communicated with their respective cluster controller and (ignoring what occurs in the instances themselves), are completely oblivious to each others existence.  The process of migration fundamentally involves sending the entirety of the state of a VM(in the form of a disk image, kernel, ramdisk, and memory pages) to another node.  Short of redirecting this communication through the cluster, which would generate significant bandwidth, or using special routing hardware to mask the transmission, migration would not be possible without exposing the existence and location of other nodes.
 
-Currently, our scheduler consists of <BLAH>.  In order to provide a variety of options to the decision tree (or other relevant structure), we have <BLAH>.  
-
+Currently, our scheduler is quite elementary and only exposes a threshold in which to optimize between throughput and energy efficiency.  Our model of throughput is currently built on the assumption that instances assigned to individual machines will perform better than the same number of instances on fewer machines, and our energy model is based on the assumption that instances assigned to individual machines on consume more energy than the same number of instances on fewer machines.  We will implement a much greater number of thresholds to implement such as <INSERT MORE KNOBS HERE>.  These knobs will allow us to modify the ways in which VMs are allocated, in terms of both allocations and migrations, in order to better meet the needs of the cluster.
 
 
