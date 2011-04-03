@@ -1,7 +1,7 @@
 \section{Design}
 
 Koala builds upon Eucalyptus in three main ways.  First, Koala extends
-Eucalyptus by adding live migration, which serves as a fundamnetal building
+Eucalyptus by adding live migration, which serves as a fundamental building
 block for the other components.  Second, Koala adds a parameterizable scheduler
 to the cluster controller that leverages live migration to move tasks around to
 achieve some more desirable configuration.  Third, Koala monitors the
@@ -10,22 +10,14 @@ the scheduler, using this feedback to improve Koala's scheduling decisions.  We
 describe each of these components below.
 
 \subsection{Live Migration}
-Live migration is the process of transparently moving a running VM between two machines.  In Koala, in order to efficiently manage the resources of a cloud, we need to be able to move VMs around in order to put them in a desired configuration.  Without live migration, this was simply not possible without disrupting the state and/or connections to the machine.  Because of this, implementing live migration was a necessary step in the development of Koala.
+Live migration is the process of transparently moving a running VM between two machines.  In Koala, in order to efficiently manage the resources of a cloud, we need to be able to move VMs around in order to put them in a desired configuration.  It's important that we do so without disrupting the internal state of the machine, any active network connections, and that while moving VM's we have minimal downtime.  Koala accomplishes these goals with the use of live migration between nodes within a cluster.  This live migration primitive is a key part of the Koala architecture, enabling the other components to dynamically manage the resources of the cluster.
 
 \subsection{Parameterized Scheduler}
+Koala has a parameterized scheduler.  The primary goal of the scheduler is to manage the assignment of VM's to nodes in an attempt to achieve a more desirable system.  The scheduler has two components, a static scheduler and the dynamic scheduler.  The static scheduler answers the question ``on which node should this instance start?'', while the dynamic scheduler answers the more complicated question ``Is there some migration that would result in a more optimal configuration?''.  The dynamic scheduler needs to take into account many things, such as the cost of migration and what it means to be an optimal configuration.  This is a challenge because distributed systems are hard to predict, especially when building a general scheduler.  Koala handles this in its scheduler by exposing the various weights and configuration knobs into scheduling paramaters that can be changed at runtime to make decisions.  The goal of these parameters are to abstract away as many assumptions as we can into configurable values that enable the scheduler to be as general it can be.
 
 \subsection{Dynamic Learning}
+Given our parameterized scheduler, we have the task of setting all those configuration values to something reasonable for a particular system, and set of workloads, all of which might change dynamically.  We believe asking the user to set these values imposes an unreasonable burden, due to the complexity of such a task as well as the ever-changing needs of a Eucalyptus system.  Koala fixes this by using learning algorithms to take reported system monitoring information feedback and using it to tweak the parameters of the scheduler in an attempt to optimize with respect to an optimality metric.  The definition of the optimality metric is itself a complicated issue as there are many different definitions of optimal (attempts to reduce power consumption might be at odds with attempts to increase system performance), and so we generalize these to our final set of knobs that the end-user actually sees: the optimality metric configuration parameters.  This greatly simplifies the burden on the user, and because this too is dynamically configurable, can allow for greater control of the system as requirements and priorities change.
 
+\subsection{Summary}
 
-
-% For our project, we will modify the scheduler for eucalyptus to have adjustable
-% inputs.  Options such as prioritizing of VMs, number of VMs per server,
-% resources per VM, migration thresholds and many other options will be
-% modify-able.  We will then execute benchmarks and log the events related to the
-% scheduler.  We will then run a variety of benchmarks, likely including
-% cpu-limited, memory-limited, disk-limited, and network limited benchmarks.  We
-% will then analyze these event logs by utilizing data mining techniques.  We will
-% use this analysis to generate the scheduler.  We will compare the performance of
-% this scheduler to the unmodified scheduler of Eucalyptus.  Given sufficient
-% time, we will generate a system that logs evens during execution, which will
-% adjust the inputs on the fly, while attempting to maximize performance.
+Koala has three components, each building on the previous: the addition of live migration to allow dynamic resource management, the parameterized scheduler which uses live migration to achieve a more desirable system configuration, and the user of learning algorithms to dynamically manage the scheduling parameters to ensure the system is working as well as it can with respect to user-defined optimality metrics.  We believe this is a power combination that not only greatly simplifies and automates the resource management of the cluster but through it's highly dynamic and configurable nature, but also enables significantly improved resource utilization than would otherwise be possible.
