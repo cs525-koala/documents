@@ -1,7 +1,7 @@
 \section{Design}
 
 Koala builds upon Eucalyptus in three main ways.  First, Koala extends
-Eucalyptus by adding live migration, which serves as a fundamnetal building
+Eucalyptus by adding live migration, which serves as a fundamental building
 block for the other components.  Second, Koala adds a parameterizable scheduler
 to the cluster controller that leverages live migration to move tasks around to
 achieve some more desirable configuration.  Third, Koala monitors the
@@ -10,7 +10,7 @@ the scheduler, using this feedback to improve Koala's scheduling decisions.  We
 describe each of these components below.
 
 \subsection{Live Migration}
-Live migration is the process of transparently moving a running VM between two machines.  In Koala, in order to efficiently manage the resources of a cloud, we need to be able to move VMs around in order to put them in a desired configuration.  Without live migration, this was simply not possible without disrupting the state and/or connections to the machine.  Because of this, implementing live migration was a necessary step in the development of Koala.
+Live migration is the process of transparently moving a running VM between two machines.  In Koala, in order to efficiently manage the resources of a cloud, we need to be able to move VMs around in order to put them in a desired configuration.  It's important that we do so without disrupting the internal state of the machine, any active network connections, and that while moving VM's we have minimal downtime.  Koala accomplishes these goals with the use of live migration between nodes within a cluster.  This live migration primitive is a key part of the Koala architecture, enabling the other components to dynamically manage the resources of the cluster.
 
 \subsection{Parameterized Scheduler}
 
