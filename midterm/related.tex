@@ -1,4 +1,4 @@
-\section{Related}
+\section{Related Work}
 
 %% Eucalyptus scheduler, talk about it here
 The foundation of our work is the set of schedulers contained in
@@ -42,7 +42,7 @@ to their methodology and is effective for MapReduce workloads.
 Load-balancing is a critical issue related to the optimized scheduling.  Zhao,
 et. al ~\cite{Zhao} developed an adaptive load-balancing system algorithm for
 Eucalyptus called ``COMPARE\_AND\_BALANCE''.  Their system focuses on
-load-balancing as the primary goal, while we hope to build a more general
+load-balancing as the primary goal, while Koala provides a more general
 scheduler to fit the needs and success metrics unique to each cluster.
 Additionally they focused on a distributed algorithm forbidding the use of a
 centralized scheduling node, which is not a limitation we impose in our system.
@@ -52,8 +52,8 @@ centralized scheduling node, which is not a limitation we impose in our system.
 Begnum et al.~\cite{Begnum} have experimented with moving virtual machine policy
 inside the virtual machine itself.  The benefits of this include improved
 portability and aptitude for live-migration.  Additionally, this increases the
-ease at which virtual machines can move between non-homogeneous systems within a
-cloud.  They worked with MLN (Manage Large Networks), an open source tool
+ease with which virtual machines can move between non-homogeneous systems
+in a cloud.  They worked with MLN (Manage Large Networks), an open source tool
 providing atomic operations to enable the management of large quantities of a
 variety of virtual machines \cite{Xen,UML,VMware}.  It provides an interface in
 the form of a configuration language.
@@ -78,4 +78,5 @@ workloads \cite{Juve,Simmhan,Hoffa}.  By gathering basic characteristics of the
 workload, Simmhan et al.~\cite{Simmhan} build a \emph{blackbox} system to help
 schedule the workflow.  This is similar to our work, although we hope to
 determine the characteristics of the workflow experimentally, and not require
-them as inputs from the user.
+them as inputs from the user, and instead only have the user indicate their
+desired success metrics.
