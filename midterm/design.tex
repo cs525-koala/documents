@@ -10,7 +10,7 @@ the scheduler, using this feedback to improve Koala's scheduling decisions.  We
 describe each of these components below.
 
 \subsection{Live Migration}
-
+Live migration is the process of transparently moving a running VM between two machines.  In Koala, in order to efficiently manage the resources of a cloud, we need to be able to move VMs around in order to put them in a desired configuration.  Without live migration, this was simply not possible without disrupting the state and/or connections to the machine.  Because of this, implementing live migration was a necessary step in the development of Koala.
 
 \subsection{Parameterized Scheduler}
 
