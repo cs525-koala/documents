@@ -10,11 +10,12 @@ greedy algorithm and a round-robin algorithm.  The greedy algorithm will use the
 first available node that can run a given job, and round-robin will find the
 \emph{next} suitable node.  Eucalyptus also implements a power-saving scheduling
 algorithm based on the greedy scheduler that attempts to shut down idle nodes in
-order to conserve power.  We believe that Eucalyptus could benefit from a more
-specialized scheduler, which takes additional infomation into account when
-scheduling virtual machines.  Additionally Eucalyptus does not allow live
-migration of allocated VMs, which prevents the exploration of additional
-scheduling enhancements.  We hope to address this as well in our work.
+order to conserve power.  Note that these schedulers are only used to determine
+where to put a start a job, because Euclayptus does not support live migration.
+Koala extends Eucalyptus to support live migration, enabling much more aggresive
+and reactive scheduling algorithms.  Additionally Koala uses dynamic information
+about the system as well as a significantly more sophisticated parameterized
+scheduling algorithm resulting in a more desirable use of resources.
 
 %% Papers we read for class.
 Researchers from Microsoft built Quincy~\cite{Quincy}, a cloud scheduling
