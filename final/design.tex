@@ -2,10 +2,13 @@
 
 % MOTIVATE THIS $##%@##, don't just present it!
 
-\large (INDY COMMENT) \normalsize\\
-\emph{In general, many parts of the design are not motivated: they are just
+\Comment{In general, many parts of the design are not motivated: they are just
 presented as is. This makes it difficult to convince the reader that the
 design decisions were in fact the best ones possible.}
+
+\Comment{Sec 3 presents several different components: it is not clear however
+why you absolutely need these different components. Give examples here to make
+the motivation clearer.}
 
 Koala builds upon Eucalyptus in four main ways.  First, Koala extends
 Eucalyptus by adding live migration, which serves as a fundamental building
@@ -36,6 +39,12 @@ manage the resources of the cluster.
 \subsection{Performance Monitoring}
 
 \subsection{Parameterized Scheduler}
+\Comment{Sec 3.2 is rather vague and abstract: please tighten.}
+information..configuration parameters..some optimality metric.¹ What
+monitoring information is used? Which configuration params are set (and why
+only those)? What optimality metrics? Give examples.
+
+
 Koala has a parameterized scheduler.  The primary goal of the scheduler is to
 manage the assignment of VMs to nodes in an attempt to achieve a more desirable
 system.  The scheduler has two components, a static scheduler and the dynamic
@@ -53,6 +62,7 @@ possible into configurable values that enable the scheduler to be as general it
 can be.
 
 \subsection{Dynamic Learning}
+\Comment{Sec 3.3 is abstract and says that Œit uses monitoring}
 Given our parameterized scheduler, we have the task of setting the
 configuration values to something reasonable for a particular system and set of
 workloads, all of which might change dynamically.  We believe asking the user
