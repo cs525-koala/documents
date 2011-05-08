@@ -1,4 +1,5 @@
 \section{Introduction}
+\label{sec:intro}
 \Comment{What is the concrete problem statement you are solving? Please state this clearly in the introduction.}
 
    Modern computing needs have grown to require the execution of larger and more complex tasks, which require more storage and computational power than ever before.  Cloud computing has emerged as both a topic in research and industry, and strives to provide the best platform for these tasks given a set of resources to run them on.  Cloud computing is closely tied with its roots in distributed and grid computing systems and has significant overlap with them.  
@@ -18,3 +19,4 @@ Furthermore, because Eucalyptus has no application-level knowledge of the tasks 
 %mostly stolen from the abstract, might want to diverge more
 To address these issues, we present \emph{Koala}, an enhanced Eucalyptus system which uses live migration and a dynamic scheduler to greatly improve resource utilization within a cluster.  Utilizing the benefits provided from live migration, Koala's dynamic scheduler can make effective and reactive scheduling decisions that were not possible by the basic Eucalyptus system.  Additionally, Koala's use of learning algorithms allow it to optimize the configuration of the scheduler and make it robust to changing needs and demands on the cluster.
 
+The rest of the paper is organized as follows.  In the next Section, we discuss related work.  In Section~\ref{sec:background}, describe the various components of Eucalyptus.  Section~\ref{sec:design} presents the design of our system, and the implementation details are described in Section~\ref{sec:impl}.  The evaluation of Koala is presented in Section~\ref{sec:eval}, and \Comment{finish me when we have a conclusion}.
