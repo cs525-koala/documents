@@ -1,12 +1,15 @@
 \section{Design}
 
-Koala builds upon Eucalyptus in three main ways.  First, Koala extends
+Koala builds upon Eucalyptus in four main ways.  First, Koala extends
 Eucalyptus by adding live migration, which serves as a fundamental building
-block for the other components.  Second, Koala adds a parameterizable scheduler
-to the cluster controller that leverages live migration to move tasks around to
-achieve a more desirable configuration.  Third, Koala monitors the performance
-of the system and uses learning algorithms to tune the parameters to the
-scheduler, using this feedback to improve Koala's scheduling decisions.
+block for the other components.  Second, we added performance monitoring
+infrastructure to Koala that reports on the nodes and the instances. Third,
+Koala adds a dynamic parameterized scheduler to the cluster controller that
+leverages live migration and the monitoring information to achieve more
+desirably configurations on-the-fly.  Finally, to overcome the limitations of a
+hardcoded scheduler, Koala uses a dynamic learning algorithm to tune the
+parameters of the scheduler over time to improve the scheduling decisions to
+suit the workload.
 
 Figure~\ref{fig:Koala} shows these components and where they fit into the
 overall system architecture, and we describe each of them below.
@@ -22,6 +25,8 @@ network connections, and that while moving VMs we have minimal downtime.  Koala
 uses live migration to achieve this.  This live migration primitive is a key
 part of the Koala architecture, enabling the other components to dynamically
 manage the resources of the cluster.
+
+\subsection{Performance Monitoring}
 
 \subsection{Parameterized Scheduler}
 Koala has a parameterized scheduler.  The primary goal of the scheduler is to
