@@ -1,0 +1,54 @@
+\documentclass[letterpaper,twocolumn,12pt]{article}
+\usepackage[margin=.95in]{geometry}
+\usepackage{times}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{mdwlist}
+
+\newcommand{\scalefig}[3]{
+  \begin{figure}[ht!]
+    % Requires \usepackage{graphicx}
+    \centering
+    \includegraphics[width=#2\columnwidth]{#1}
+    %%% I think \captionwidth (see above) can go away as long as
+    %%% \centering is above
+    %\captionwidth{#2\columnwidth}%
+    \caption{#3}
+    \label{fig:#1}
+  \end{figure}}
+
+\sloppy
+
+\title{Koala: Improved Scheduler Running on Eucalyptus}
+%\author{\small Will Dietz, Kevin Larson\\
+%\small \{wdietz2, klarson5\}@illinois.edu\\
+%\small University of Illinois at Urbana Champaign}
+\author{\small (Names withheld for anonymous submission)}
+
+\date{}
+
+\pagestyle{plain}
+\pagenumbering{arabic}
+
+\begin{document}
+
+\maketitle
+
+% No abstract for introduction
+\input{abstract.tex}
+\input{intro.tex}
+\input{related.tex}
+\input{background.tex}
+\input{design.tex}
+\input{implementation.tex}
+\input{evaluation.tex}
+
+% (Make the references in a smaller font)
+\footnotesize
+\bibliographystyle{abbrv}
+\bibliography{mybib}
+
+\normalsize
+\newpage
+\input{business.tex}
+\end{document}

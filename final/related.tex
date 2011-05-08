@@ -1,0 +1,82 @@
+\section{Related Work}
+
+%% Eucalyptus scheduler, talk about it here
+The foundation of our work is the set of schedulers contained in
+Eucalyptus~\cite{Eucalyptus}.  Eucalyptus is a cloud computing infrastructure,
+which uses virtualization technologies such as Xen~\cite{Xen},
+VMware~\cite{VMware} and KVM/QEMU~\cite{QEMU}, and provides an interface to
+EC2/S3 ~\cite{AWS}.   Eucalyptus ships with two main scheduling algorithms: a
+greedy algorithm and a round-robin algorithm.  The greedy algorithm will use the
+first available node that can run a given job, and round-robin will find the
+\emph{next} suitable node.  Eucalyptus also implements a power-saving scheduling
+algorithm based on the greedy scheduler that attempts to shut down idle nodes in
+order to conserve power.  Note that these schedulers are only used to determine
+where to put a start a job, because Euclayptus does not support live migration.
+Koala extends Eucalyptus to support live migration, enabling much more
+aggressive and reactive scheduling algorithms.  Additionally Koala uses dynamic
+information about the system as well as a significantly more sophisticated
+parameterized scheduling algorithm resulting in a more desirable use of
+resources.
+
+%% Papers we read for class.
+Researchers from Microsoft built Quincy~\cite{Quincy}, a cloud scheduling
+framework for Dryad and MapReduce-like systems.  They reduced the scheduling to
+a min-cost problem in order to expose a variety of adjustable options.  They
+found these options were effective in tuning the scheduler to perform various
+workloads.  In our project, we will build a similarly parameterized scheduler,
+but will target Eucalyptus, which has fundamentally different scheduling
+requirements.  Additionally our work focuses on building a tool that determines
+the optimal parameters, not just the scheduling framework itself.
+
+Zaharia et al. developed their LATE scheduler for MapReduce in order to improve
+task speculation on heterogenous systems~\cite{Zaharia}.  This contrasts our
+work because we target not just the service level (MapReduce) but the
+infrastructure itself (at the VM level), where speculation is not traditionally
+used.  Similarly Mantri et al.~\cite{Mantri} focus on improving performance by
+better handling of stragglers  in a MapReduce system.  Mantri et al. focus on
+exploring the cause of an outlier through monitoring and other methods to take
+appropriate action and free those resources.  Early detection of outliers is key
+to their methodology and is effective for MapReduce workloads.
+
+%% Zhao work on adaptive load-balancing.
+Load-balancing is a critical issue related to the optimized scheduling.  Zhao,
+et. al ~\cite{Zhao} developed an adaptive load-balancing system algorithm for
+Eucalyptus called ``COMPARE\_AND\_BALANCE''.  Their system focuses on
+load-balancing as the primary goal, while Koala provides a more general
+scheduler to fit the needs and success metrics unique to each cluster.
+Additionally they focused on a distributed algorithm forbidding the use of a
+centralized scheduling node, which is not a limitation we impose in our system.
+
+%% MLN + Internal VM polity + Migration
+
+Begnum et al.~\cite{Begnum} have experimented with moving virtual machine policy
+inside the virtual machine itself.  The benefits of this include improved
+portability and aptitude for live-migration.  Additionally, this increases the
+ease with which virtual machines can move between non-homogeneous systems
+in a cloud.  They worked with MLN (Manage Large Networks), an open source tool
+providing atomic operations to enable the management of large quantities of a
+variety of virtual machines \cite{Xen,UML,VMware}.  It provides an interface in
+the form of a configuration language.
+
+% GA-based approaches:
+
+%% Topology-Aware Resource Allocation for Data-Intensive Workloads
+A number of researchers have applied genetic algorithms (GA) to the task of
+dynamically scheduling on the cloud~\cite{Lee,Zhong,Chenhong}.  In~\cite{Lee}
+they improved upon Eucalyptus's scheduling algorithms with a focus on topology
+sensitivity using GA.  They claim in their future work they would be interested
+in machine learning based systems, similar to our system.  Additionally they
+focused on the data-intensive workload produced from MapReduce tasks. Zhong, et
+al.~\cite{Zhong} built their Improved Genetic Algorithm (IGA) to improve the
+scheduling algorithms commonly used in open-source clouds.
+
+%% Scientific workflows:
+
+Some scheduling algorithms focus on particular workloads.  While some
+researchers only consider MapReduce-like loads, others focus on scientific
+workloads \cite{Juve,Simmhan,Hoffa}.  By gathering basic characteristics of the
+workload, Simmhan et al.~\cite{Simmhan} build a \emph{blackbox} system to help
+schedule the workflow.  This is similar to our work, although we hope to
+determine the characteristics of the workflow experimentally, and not require
+them as inputs from the user, and instead only have the user indicate their
+desired success metrics.
