@@ -1,9 +1,28 @@
-%  \section{Motivation and Problem Statement}
-%  
-%  % Assignment-given goals:
-%  % Motivation, and concrete problem statement.
-%  % Need not be formal, only concrete.
-%  
-%  Citation to make the bib generation happy, for now, until we actually have
-%  citations~\cite{Eucalyptus}.
-%  
+ \begin{Introduction}
+As cloud computing continues to gain momentum, the infrastructure supporting
+clouds continues to grow.  Many modern solutions make heavy use of
+virtualization, not only to provide isolation between tasks, but also for
+dividing hardware resources, and balancing machine utilization.  Eucalyptus is
+an infrastructure that has contributed a great deal of work to this area.  It is
+one of the most common open source cloud computing systems, but presently only
+has rudimentary scheduling policies that are only used when an instance is
+started.  We present \emph{Koala}, an enhanced Eucalyptus system which uses live 
+migration and a dynamic learning scheduler to greatly improve resource utilization within a cluster.  Utilizing the benefits provided from live migration, Koala's dynamic scheduler can make effective and reactive scheduling decisions that were previously not possible.  Additionally, Koala's use of learning algorithms allow it to get the most out of the scheduler and make it robust to changing needs and demands on the cluster.
+%Wish we could back this up with evaluation results :/
+  Modern computing is moving towards larger and more complex tasks.  These tasks require more storage and computational power than ever before.  Cloud Computing is a developing field, built around providing solutions to this problem.  Cloud Computing is closely tied with distributed and grid computing, and shares technology and infrastructure with them.  Many advancements have been made in these areas, and Cloud Computing is currently a very popular venture for computing start-ups.
+
+  Eucalyptus is an infrastructure provided by Eucalyptus Systems Inc, which allows for deployment across a large variety of systems and provides a consistent interface for access to the underlying network.  The current version of Eucalyptus has a primitive scheduler, only using rudimentary placement algorithms and only invoked to determine which node to start a VM on.  In order to fully utilize a large cluster of machines, properly delegating tasks and balancing resource utilization is key.
+
+  We propose Koala, an enhanced Eucalyptus system, which uses a learning scheduler to maximize throughput and utilization of the machines in a cluster.  Koala's algorithm gathers monitoring information and uses this data to adjust how the scheduler behaves.  Our system allows for increased utilization of machines in a cluster, reducing the hardware, energy, and management expenses associated with the operation of a large cluster of machines.
+
+  The current version of Eucalyptus is currently only capable of static scheduling.  Due to VM churn, these allocations can drift away from optimal configurations.  For example, if a 100 instances were running on 100 machines at 25\% utilization and energy efficiency was important, the Koala scheduler could migrate the instances to just 25\% of the machines, and the remaining 75\% of the machines could be powered off in order to conserve energy.  In the case where the optimal throughput was desired, it could perform the same operation in reverse.  Neither of these operations are possible in the existing Eucalyptus system, and are one of the key benefits of using Koala.
+
+  In addition to the automated improvements to efficiency and throughput, the Koala scheduler can be influenced externally to account for additional factors.  It can be instructed to minimize network bandwidth (for other tasks) or reduce power consumption to reduce operation costs.  For example, if resources are not scarce, or a workload is not time critical, the scheduler can be instructed to prioritize power consumption, and not use a machine if it cannot sufficiently utilize that machine's resources.
+
+  However, the needs, priorities, and workloads of a cloud can often change during operation.  A company might want to conserve power (and money) by default, but change to maximize performance at some point when a deadline comes up, perhaps.  The ability to reconfigure this dynamically allows the cluster to be optimized to the customer's particular needs and use cases.
+
+  Companies often invest large amounts of capital into building and maintaining their cloud infrastructure, and Koala allows those companies to significantly increase the efficiency of their cluster.  This can result in lots of savings for those users in reduced costs of hardware, energy, and management.
+\end{Introduction}
+  
+
+  
