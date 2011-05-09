@@ -1,4 +1,7 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-As we have shown, Koala can offer significant performance improvements over Eucalyptus when VMs in contention for CPU resources.  In the passes of the experiment with the highest loads, Koala was able to reduce the average .  Koala's ability to improve performance is only limited to CPU resources as a result of the current implementation.  With accurate and robust monitoring of memory and network usage, Koala would be able to extend the same benefits to memory and network limited tasks.  
+As we have shown, Koala can offer significant performance improvements over Eucalyptus when VMs in contention for CPU resources.  In the passes of the experiments with the highest loads, Koala was able to more than halve the average task durations.  We have shown that a dynamic scheduler can significantly improve the performance of CPU-bound tasks running on a cloud.
+
+Future work involves extending the monitoring to encompass more types of resource monitoring.
+Koala's ability to improve performance is only limited to CPU resources as a result of the current implementation.  With accurate and robust monitoring of memory, disk, and network usage, Koala would be able to extend many of same benefits to memory, disk, and network limited tasks.  Additionally, as these types of tasks are run together, a greater number of effective configurations become available to the scheduler.  
