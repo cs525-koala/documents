@@ -63,28 +63,30 @@ define a higher score to mean a better resource allocation.
 
 Our scheduling algorithm then works as follows:
 
-\begin{algorithm*}
+\begin{algorithm}
 \caption{Koala's Scheduler}
 \label{algo:sched}
+\footnotesize
 \begin{algorithmic}
 \Procedure{Schedule}{$M$, $C$, $D$}
     \State $best \gets \{C,Score(M,C)\}$%\Comment{Track best}
     \ForAll{$Instances~I, Nodes~N$}
-        \If{$isIllegalMigration(I,N)$}
+        \State $C' \gets C : (I \gets N)$
+        \If{$isIllegal(C')$}
             \State $skip$
         \EndIf
-        \State $C' \gets C : (I \rightarrow N)$
-        \State $S \gets Score(M,C') - migrationCost(M,C',I,N)$
+        \State $S \gets Score(M,C') - migrationCost(\dots)$
         \State $best = max(best,\{C',S\})$
         \If{$D > 1$} %\Comment{Look another step ahead}
         \State $\{C'',S\} \gets Schedule(M,C',D-1)$
-        \State $best = max(best,\{C', S - Penalty\})$
+        \State $best = max(best,\{C', S - Penalty(\dots)\})$
         \EndIf
     \EndFor
     \State \textbf{return} $best$
 \EndProcedure
 \end{algorithmic}
-\end{algorithm*}
+\normalsize
+\end{algorithm}
 
 %The scoring function in Koala works as follows:
 
