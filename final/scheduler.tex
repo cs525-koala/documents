@@ -3,7 +3,7 @@
 \caption{Dynamic Scheduler}
 \label{algo:sched}
 \footnotesize
-\begin{algorithmic}
+\begin{algorithmic}[1]
 \Procedure{Schedule}{$M$, $C$, $D$}
     \State $best \gets \{C,Score(M,C)\}$%\Comment{Track best}
     \ForAll{$Instances~I, Nodes~N$}
@@ -28,12 +28,12 @@
 \caption{Configuration Scoring}
 \label{algo:score}
 \footnotesize
-\begin{algorithmic}
+\begin{algorithmic}[1]
 \Procedure{Score}{$M$, $C$}
     \State $S \gets 0$
     \ForAll{$Nodes~N, Resources~R$}
-        \State $C \gets M.theoryUsed(R,N) - M.avail(R,N)$
-        \State $S \gets S + max(C,0)$
+        \State $C \gets M.theoretical(R,N) - M.avail(R,N)$
+        \State $S \gets S + max(C,0)$ \label{algo:scoremax}
     \EndFor
     \State \textbf{return} $S$
 \EndProcedure

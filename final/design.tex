@@ -70,47 +70,63 @@ complexities and those surrounding other parameters in our system motivate the
 learning scheduler to change them in response to observed longer-term
 performance feedback.
 
-\subsection{Live Migration}
-Live migration is the process of transparently moving a running VM between two
-machines.  In Koala, in order to efficiently manage the resources of a cloud,
-we need to be able to move VMs around to put them in a desired configuration.
-This must be done without disrupting the internal state of the VM, any active
-network connections, and that while moving VMs we have minimal downtime.  Koala
-uses live migration to achieve this.  This live migration primitive is a key
-part of the Koala architecture, enabling the other components to dynamically
-manage the resources of the cluster.
+The scoring metric is relatively simple, and largely relies on a robust and
+powerful performance monitoring infrastructure.  Algorithm~\ref{algo:score}
+shows how we compute the score for a particular configuration using monitoring
+information $M$.  We monitor instances and look to determine their theoretical
+resource consmuption use, for example an instance running on a CPU-overloaded
+node (perhaps it has many non-VM background tasks) might internaly be wanting to
+use 100\% of it's CPU, but we observe that its virtual cpu only is being
+scheduled 50\%.  This difference is what matters, and what we can use to
+determine when an instance is possible better elsewhere.  Finally, we declare
+that if the VM's on a node are not using all of a particular resource, that
+should be scored the same as if the node has exactly the 'right' amount of that
+resource.  This is to prevent unnecessary migration to more capable hosts
+because unless more is needed the instances in question will make 'maximal'
+progress using the node they're on (this is reflected in
+line~\ref{algo:scoremax}).
 
-\subsection{Performance Monitoring}
-\KComment{WRITE ME}
-
-
-\subsection{Dynamic Learning}
-\KComment{Sec 3.3 is abstract and says that Œit uses monitoring}
-Given our parameterized scheduler, we have the task of setting the
-configuration values to something reasonable for a particular system and set of
-workloads, all of which might change dynamically.  We believe asking the user
-to set these values imposes an unreasonable burden, due to both the complexity
-of such a task and the ever-changing needs of an Eucalyptus system.  Koala
-simplifies this task by leveraging learning algorithms.  It uses monitoring
-information to attempt to find ideal values for the configuration parameters,
-with respect to some optimality metric.  The problem of how to determine the
-optimality metric is in itself, a complicated issue.  This is due to the fact
-that there are many different definitions of optimal (attempts to reduce power
-consumption might be at odds with attempts to increase system performance), and
-so we generalize these to a smaller set of knobs which are exposed to the
-end-user.  This greatly simplifies the burden on the user, and because this too
-is dynamically configurable, can allow for greater control of the system as
-requirements and priorities change.
-
-\subsection{Summary}
-
-Koala has three components, all of which build upon each other.  The addition
-of live migration allows dynamic resource management, but is far too
-complicated for Eucalyptus's primitive scheduler to reason about.  The
-parameterized scheduler attempts to uses live migration to achieve a more
-desirable system configuration, but exposes a new challenge in the form of
-configurable parameters.  Learning algorithms, when provided sufficient data
-and optimality metrics, should provide near optimal scheduling parameters.  We
-believe this is a powerful combination that not only greatly simplifies and
-automates the resource management of the cluster, but also enables
-significantly improved resource utilization than would otherwise be possible.
+%\subsection{Live Migration}
+%Live migration is the process of transparently moving a running VM between two
+%machines.  In Koala, in order to efficiently manage the resources of a cloud,
+%we need to be able to move VMs around to put them in a desired configuration.
+%This must be done without disrupting the internal state of the VM, any active
+%network connections, and that while moving VMs we have minimal downtime.  Koala
+%uses live migration to achieve this.  This live migration primitive is a key
+%part of the Koala architecture, enabling the other components to dynamically
+%manage the resources of the cluster.
+%
+%\subsection{Performance Monitoring}
+%\KComment{WRITE ME}
+%
+%
+%\subsection{Dynamic Learning}
+%\KComment{Sec 3.3 is abstract and says that Œit uses monitoring}
+%Given our parameterized scheduler, we have the task of setting the
+%configuration values to something reasonable for a particular system and set of
+%workloads, all of which might change dynamically.  We believe asking the user
+%to set these values imposes an unreasonable burden, due to both the complexity
+%of such a task and the ever-changing needs of an Eucalyptus system.  Koala
+%simplifies this task by leveraging learning algorithms.  It uses monitoring
+%information to attempt to find ideal values for the configuration parameters,
+%with respect to some optimality metric.  The problem of how to determine the
+%optimality metric is in itself, a complicated issue.  This is due to the fact
+%that there are many different definitions of optimal (attempts to reduce power
+%consumption might be at odds with attempts to increase system performance), and
+%so we generalize these to a smaller set of knobs which are exposed to the
+%end-user.  This greatly simplifies the burden on the user, and because this too
+%is dynamically configurable, can allow for greater control of the system as
+%requirements and priorities change.
+%
+%\subsection{Summary}
+%
+%Koala has three components, all of which build upon each other.  The addition
+%of live migration allows dynamic resource management, but is far too
+%complicated for Eucalyptus's primitive scheduler to reason about.  The
+%parameterized scheduler attempts to uses live migration to achieve a more
+%desirable system configuration, but exposes a new challenge in the form of
+%configurable parameters.  Learning algorithms, when provided sufficient data
+%and optimality metrics, should provide near optimal scheduling parameters.  We
+%believe this is a powerful combination that not only greatly simplifies and
+%automates the resource management of the cluster, but also enables
+%significantly improved resource utilization than would otherwise be possible.
