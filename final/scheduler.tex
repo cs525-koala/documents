@@ -1,0 +1,42 @@
+
+\begin{algorithm}
+\caption{Koala's Scheduler}
+\label{algo:sched}
+\footnotesize
+\begin{algorithmic}
+\Procedure{Schedule}{$M$, $C$, $D$}
+    \State $best \gets \{C,Score(M,C)\}$%\Comment{Track best}
+    \ForAll{$Instances~I, Nodes~N$}
+        \State $C' \gets C : (I \gets N)$
+        \If{$isIllegal(C')$}
+            \State $skip$
+        \EndIf
+        \State $S \gets Score(M,C') - migrationCost(\dots)$
+        \State $best = max(best,\{C',S\})$
+        \If{$D > 1$} %\Comment{Look another step ahead}
+        \State $\{C'',S\} \gets Schedule(M,C',D-1)$
+        \State $best = max(best,\{C', S - Penalty(\dots)\})$
+        \EndIf
+    \EndFor
+    \State \textbf{return} $best$
+\EndProcedure
+\end{algorithmic}
+\normalsize
+\end{algorithm}
+
+\begin{algorithm}
+\caption{System Scoring}
+\label{algo:score}
+\footnotesize
+\begin{algorithmic}
+\Procedure{Score}{$M$, $C$}
+    \State $S \gets 0$
+    \ForAll{$Nodes~N, Resources~R$}
+        \State $C \gets M.theoryUsed(R,N) - M.avail(R,N)$
+        \State $S \gets S + max(C,0)$
+    \EndFor
+    \State \textbf{return} $S$
+\EndProcedure
+\end{algorithmic}
+\normalsize
+\end{algorithm}
