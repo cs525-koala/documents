@@ -27,3 +27,23 @@ A Storage Controller would normally be group with each cluster in a cloud.  The 
 
 \subsection{Walrus Controller}
 Walrus is a Eucalyptus's put-get bucket storage system.  It is designed to be compatible with Amazon's S3 storage system.  Eucalyptus uses Walrus for storage of user data and access control for VMs.
+
+\subsection{Static Scheduling}
+%% Eucalyptus scheduler, talk about it here
+The foundation of our work is the set of schedulers contained in
+Eucalyptus~\cite{Eucalyptus}.  Eucalyptus is a cloud computing infrastructure,
+which uses virtualization technologies such as Xen~\cite{Xen},
+VMware~\cite{VMware} and KVM/QEMU~\cite{QEMU}, and provides an interface to
+EC2/S3 ~\cite{AWS}.   Eucalyptus ships with two main scheduling algorithms: a
+greedy algorithm and a round-robin algorithm.  The greedy algorithm will use the
+first available node that can run a given job, and round-robin will find the
+\emph{next} suitable node.  Eucalyptus also implements a power-saving scheduling
+algorithm based on the greedy scheduler that attempts to shut down idle nodes in
+order to conserve power.  Note that these schedulers are only used to determine
+where to put a start a job, because Euclayptus does not support live migration.
+Koala extends Eucalyptus to support live migration, enabling much more
+aggressive and reactive scheduling algorithms.  Additionally Koala uses dynamic
+information about the system as well as a significantly more sophisticated
+parameterized scheduling algorithm resulting in a more desirable use of
+resources.
+
