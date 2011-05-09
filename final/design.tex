@@ -41,9 +41,9 @@ uses this scoring metric to find a better configuration and work to get there.
 
 When considering the maximum throughput of the system, we make some assumptions
 about the system.  One of these is that the system will perform best when each
-instance is given as many resources it needs, and that we can roughly estimate
+VM is given as many resources it needs, and that we can roughly estimate
 system performance as the integral of our scoring metric over time.  That is to
-say that getting an instance a needed resource earlier in its execution will
+say that getting a VM a needed resource earlier in its execution will
 make the system better, and that trades-off against the amount of resource
 needed and when it has it.  We believe this to be reasonable assumption to make
 about real-world tasks.
@@ -65,7 +65,7 @@ about the cost of intermediate configurations when determining what steps to
 take.  Setting parameters like $T$ and $D$ are something we defer to the
 learning scheduler: setting $D$ too small and we might too aggressively seek
 local optimums, too large and we might make constantly short-term bad decisions
-and never reach the ideal (perhaps the instance's jobs are done by then).  These
+and never reach the ideal (perhaps the VM's jobs are done by then).  These
 complexities and those surrounding other parameters in our system motivate the
 learning scheduler to change them in response to observed longer-term
 performance feedback.
@@ -73,16 +73,16 @@ performance feedback.
 The scoring metric is relatively simple, and largely relies on a robust and
 powerful performance monitoring infrastructure.  Algorithm~\ref{algo:score}
 shows how we compute the score for a particular configuration using monitoring
-information $M$.  We monitor instances and look to determine their theoretical
-resource consmuption use, for example an instance running on a CPU-overloaded
+information $M$.  We monitor VMs and look to determine their theoretical
+resource consmuption use, for example a VM running on a CPU-overloaded
 node (perhaps it has many non-VM background tasks) might internaly be wanting to
 use 100\% of it's CPU, but we observe that its virtual cpu only is being
 scheduled 50\%.  This difference is what matters, and what we can use to
-determine when an instance is possible better elsewhere.  Finally, we declare
+determine when a VM is better off elsewhere.  Finally, we declare
 that if the VM's on a node are not using all of a particular resource, that
 should be scored the same as if the node has exactly the 'right' amount of that
 resource.  This is to prevent unnecessary migration to more capable hosts
-because unless more is needed the instances in question will make 'maximal'
+because unless more is needed, the VMs in question will make 'maximal'
 progress using the node they're on (this is reflected in
 line~\ref{algo:scoremax}).
 

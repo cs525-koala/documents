@@ -6,7 +6,7 @@
 Koala builds upon Eucalyptus in four main ways.  First, Koala extends
 Eucalyptus by adding live migration, which serves as a fundamental building
 block for the other components.  Second, Koala contains performance monitoring
-infrastructure to Koala that reports on the nodes and the instances. Third,
+infrastructure to Koala that reports on the nodes and the VMs. Third,
 Koala adds a dynamic parameterized scheduler to the cluster controller that
 leverages live migration and the monitoring information to achieve more
 desirably configurations on-the-fly.  Finally, to overcome the limitations of a
@@ -46,11 +46,11 @@ failure.  The cluster controller has to manage its respective state for both
 nodes in addition to transmitting the relevant Node Controller state for the VMs
 and the controller itself.  Additionally the cluster controller has to reason
 about this migration state when reporting to the cloud the status of a
-particular instance.
+particular VM.
 
 The very nature of migration involves slightly breaking the Eucalyptus model of
 communication between controllers.  Initially, nodes only communicated with
-their respective cluster controller and (ignoring what occurs in the instances
+their respective cluster controller and (ignoring what occurs in the VMs
 themselves) are completely oblivious to each others existence.  The process of
 migration fundamentally involves sending the entirety of the state of a VM (in
 the form of a disk image, kernel, ramdisk, and memory pages) to another node.
@@ -73,6 +73,7 @@ sending the disk contents on-demand, or making use of copy-on-write snapshots to
 increase performance for these workloads.
 
 \subsection{Scheduling}
+
 
 Our scheduler's implementation is primarily as described in
 Algorithm~\ref{algo:sched}, with some exceptions.
@@ -119,3 +120,4 @@ useful contributions to the literature.
 %machine with respect to some optimality metric?) will be handled by Koala's
 %learning dynamic scheduler, which we believe will help mitigate many of
 %these costs.
+
