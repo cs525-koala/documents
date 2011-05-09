@@ -57,7 +57,7 @@ leveraging live migration to reallocate resources and improve the overall
 system.
 
 For a given configuration $C$ (assignment of instances to nodes), and
-monitoring information $M$, we define a score $Score(C,M)$ for the system.  This
+monitoring information $M$, we define a score $Score(M,C)$ for the system.  This
 score represents how well the resources of our system are being utilized, and we
 define a higher score to mean a better resource allocation.
 
@@ -88,7 +88,24 @@ Our scheduling algorithm then works as follows:
 \normalsize
 \end{algorithm}
 
-%The scoring function in Koala works as follows:
+The scoring function in Koala works as follows:
+
+\begin{algorithm}
+\caption{System Scoring}
+\label{algo:score}
+\footnotesize
+\begin{algorithmic}
+\Procedure{Score}{$M$, $C$}
+    \State $S \gets 0$
+    \ForAll{$Nodes~N, Resources~R$}
+        \State $C \gets M.theoryUsed(R,N) - M.avail(R,N)$
+        \State $S \gets S + max(C,0)$
+    \EndFor
+    \State \textbf{return} $S$
+\EndProcedure
+\end{algorithmic}
+\normalsize
+\end{algorithm}
 
 Koala has a parameterized scheduler.  The primary goal of the scheduler is to
 manage the assignment of VMs to nodes in an attempt to achieve a more desirable
