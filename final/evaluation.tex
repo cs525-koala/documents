@@ -1,6 +1,9 @@
 \section{Evaluation}
 \label{sec:eval}
 
+\fig{koala_average_task_times}{1.5}{Average task durations for Eucalyptus and Koala}
+\fig{koala_average_task_ratio}{1.5}{Improvement of Koala over Eucalytpus}
+
 Our current setup for Koala uses six computers.  The Eucalyptus Cloud Level Controller, Cluster Controller, and Storage Controller all are running on a Debian Squeeze machine, with dual 2.33GHz quad core processors and 4GB of ram.  The Walrus Controller is running on a CentOS 5 machine, with a 3GHz dual core processor and 4GB of ram.  We also have four CCT machines, which are running CentOS 5, each with dual 2.67GHz quad core processors and 16GB of ram.  Three of the CCT machines are running the Node Controllers (and VMs), all of which use QEMU with KVM support to run the VMs.  The other CCT machine is used to run an NFS server, in order to provide shared storage for the other machines.
 
 We designed our dynamic scheduler to be able to be enabled and disabled without restarting the Cluster Controller.  We model a traditional Eucalyptus installation by disabling the dynamic scheduler.  Although parts of our implementation, such as the storage of VMs on NFS, are not commonly used in Eucalyptus implementations, other than for the dynamic monitoring information and Eucalyptus liveness management, the network is mostly unused.  As a result, our evaluation is not limited by the network ``disk'' speeds, and should be negligibly different from a standard Eucalyptus install.  We enable the dynamic scheduler for the Koala versions of our evaluation.
@@ -10,6 +13,3 @@ Our experiment uses 15 single core VMs, each with 1.5GB of memory.  At the begin
 On the first pass, we run one task inside each VMs.  On the second pass, we run the same tasks at the same times for each of the VMs.  In addition to this, we also run CPU intensive \emph{loads} (note the difference from tasks) on two of the Node Controllers (outside the VMs).  These loads consist of a looped process alternating between bc calculations and nothing (a call to sleep), and use varying sleep durations, in order to load one Node Controller 30% more than the other.  On additional passes, we continue to add more loads to the two node controllers.
 
 As shown in Figures \ref{fig:koala_average_task_times},\ref{fig:koala_average_task_ratio}, as the load on the system increases, Koala's performance degrades much less than a standard Eucalyptus system.  When there are no or few load processes on the nodes, Koala performs almost identically to Eucalyptus, as the system isn't fully utilized to begin with.  As the number of load processes increase, the points at which machines are overloaded are more frequent, and Koala's scheduler has more opportunity to improve the configuration of the VMs.
-
-\scalefig{koala_average_task_times}{1}{Average task durations for Eucalyptus and Koala}
-\scalefig{koala_average_task_ratio}{1}{Improvement of Koala over Eucalytpus}

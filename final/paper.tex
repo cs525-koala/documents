@@ -18,6 +18,18 @@
     \label{fig:#1}
   \end{figure}}
 
+\newcommand{\fig}[3]{
+  \begin{figure*}[ht!]
+    % Requires \usepackage{graphicx}
+    \centering
+    \includegraphics[width=#2\columnwidth]{#1}
+    %%% I think \captionwidth (see above) can go away as long as
+    %%% \centering is above
+    %\captionwidth{#2\columnwidth}%
+    \caption{#3}
+    \label{fig:#1}
+  \end{figure*}}
+
 %\def\KComment#1{}
 \def\KComment#1{\noindent\textbf{\textsl{$\langle\!\langle$#1$\rangle\!\rangle$}} }
 
