@@ -15,15 +15,16 @@ Koala's primary addition to Eucalyptus is its dynamic scheduler.  The scheduler
 attempts to improve resource utilization by reallocating resources on-the-fly.
 To support this, Koala consists of two additional components: live migration
 support, and performance monitoring infrastructure.  Finally, to be general
-enough to be suitable for many deployments, but to still me aggressive for a
-particular environment, we add a learning algorithm.
+enough to be suitable for many deployments, but to still be aggressive for a
+particular environment, we add a learning algorithm.  This allows us to follow
+longer trends but still be responsive to small changes.
 
 Figure~\ref{fig:Koala} shows these components and where they fit into the
 overall system architecture, and we describe each of them below.
 
 \scalefig{Koala}{0.9}{Koala System Overview}
 
-\subsection{Parameterized Scheduler}
+\subsection{Dynamic Scheduler}
 \KComment{Sec 3.2 is rather vague and abstract: please tighten.
 information..configuration parameters..some optimality metric.¹ What
 monitoring information is used? Which configuration params are set (and why
@@ -33,7 +34,7 @@ The most important part of Koala is its dynamic scheduler.  The addition of this
 scheduler enables Koala to make better use of the available resources, and to
 respond to changing loads and system conditions.
 
-In Koala, we used the performance monitoring infrastructure to answer the
+In Koala, we use the performance monitoring infrastructure to answer the
 question ``How well is our cloud performing'', and attempt to improve upon it by
 leveraging live migration to reallocate resources and improve the overall
 system.
