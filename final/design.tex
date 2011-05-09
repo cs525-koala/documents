@@ -79,9 +79,9 @@ use 100\% of it's CPU, but we observe that its virtual cpu only is being
 scheduled 50\%.  This difference is what matters, and what we can use to
 determine when a VM is better off elsewhere.  Finally, we declare
 that if the VM's on a node are not using all of a particular resource, that
-should be scored the same as if the node has exactly the 'right' amount of that
+should be scored the same as if the node has exactly the `right' amount of that
 resource.  This is to prevent unnecessary migration to more capable hosts
-because unless more is needed, the VMs in question will make 'maximal'
+because unless more is needed, the VMs in question will make `maximal'
 progress using the node they're on (this is reflected in
 line~\ref{algo:scoremax}).
 
