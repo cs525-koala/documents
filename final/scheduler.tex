@@ -6,8 +6,8 @@
 \begin{algorithmic}[1]
 \Procedure{Schedule}{$M$, $C$, $D$}
     \State $best \gets \{C,Score(M,C)\}$%\Comment{Track best}
-    \ForAll{$Instances~I, Nodes~N$}
-        \State $C' \gets C : (I \gets N)$
+    \ForAll{$VMs~V, Nodes~N$}
+        \State $C' \gets C : (V \gets N)$
         \If{$isIllegal(C')$}
             \State $skip$
         \EndIf

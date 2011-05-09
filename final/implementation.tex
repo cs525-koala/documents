@@ -6,7 +6,7 @@
 Koala builds upon Eucalyptus in four main ways.  First, Koala extends
 Eucalyptus by adding live migration, which serves as a fundamental building
 block for the other components.  Second, Koala contains performance monitoring
-infrastructure to Koala that reports on the nodes and the instances. Third,
+infrastructure to Koala that reports on the nodes and the VMs. Third,
 Koala adds a dynamic parameterized scheduler to the cluster controller that
 leverages live migration and the monitoring information to achieve more
 desirably configurations on-the-fly.  Finally, to overcome the limitations of a
@@ -46,11 +46,11 @@ failure.  The cluster controller has to manage its respective state for both
 nodes in addition to transmitting the relevant Node Controller state for the VMs
 and the controller itself.  Additionally the cluster controller has to reason
 about this migration state when reporting to the cloud the status of a
-particular instance.
+particular VM.
 
 The very nature of migration involves slightly breaking the Eucalyptus model of
 communication between controllers.  Initially, nodes only communicated with
-their respective cluster controller and (ignoring what occurs in the instances
+their respective cluster controller and (ignoring what occurs in the VMs
 themselves) are completely oblivious to each others existence.  The process of
 migration fundamentally involves sending the entirety of the state of a VM (in
 the form of a disk image, kernel, ramdisk, and memory pages) to another node.
@@ -70,10 +70,10 @@ operation and migration to a minimum.
 Currently, our scheduler is quite elementary and only exposes two thresholds,
 one to adjust the scheduling frequency, and one in which to optimize between
 throughput and energy efficiency.  Our model of throughput is currently built on
-the assumption that instances assigned to individual machines will perform
-better than the same number of instances on fewer machines, and our energy model
-is based on the assumption that instances assigned to individual machines on
-consume more energy than the same number of instances on fewer machines.  We
+the assumption that VMs assigned to individual machines will perform
+better than the same number of VMs on fewer machines, and our energy model
+is based on the assumption that VMs assigned to individual machines on
+consume more energy than the same number of VMs on fewer machines.  We
 will implement a much greater number of thresholds to implement.  One of these
 thresholds will adjust the VM densities and the hardware resources allocated to
 the specific VMs.  Another threshold would prioritize data locality over general
@@ -100,8 +100,7 @@ state.  The scheduling itself, particularly with the introduction of learning
 algorithms adds overhead to the cluster controller.  Finally, migration itself
 might incur some degraded performance in the guest machine.
 
-The actual computation cost of migration is very small in comparison to an
-instance running for an extended amount of time.  Detail of this can be found in
+The actual computation cost of migration is very small in comparison to a VM running for an extended amount of time.  Detail of this can be found in
 our evaluation.  In addition to the performance gains, we gain the ability to
 switch the system to be optimized for energy efficiency on the fly.  The larger
 costs associated with Koala would be the analysis of the event data and the
