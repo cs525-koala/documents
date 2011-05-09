@@ -1,15 +1,13 @@
 \section{Design}
 \label{sec:design}
 
-\KComment{In general, many parts of the design are not motivated: they are just
-presented as is. This makes it difficult to convince the reader that the
-design decisions were in fact the best ones possible.}
-
-\KComment{Sec 3 presents several different components: it is not clear however
-why you absolutely need these different components. Give examples here to make
-the motivation clearer.}
-
-\KComment{Add design intro}
+%%\KComment{In general, many parts of the design are not motivated: they are just
+%%presented as is. This makes it difficult to convince the reader that the
+%%design decisions were in fact the best ones possible.}
+%%
+%%\KComment{Sec 3 presents several different components: it is not clear however
+%%why you absolutely need these different components. Give examples here to make
+%%the motivation clearer.}
 
 Koala's primary addition to Eucalyptus is its dynamic scheduler.  The scheduler
 attempts to improve resource utilization by reallocating resources on-the-fly.
@@ -25,42 +23,52 @@ overall system architecture, and we describe each of them below.
 \scalefig{Koala}{0.9}{Koala System Overview}
 
 \subsection{Dynamic Scheduler}
-\KComment{Sec 3.2 is rather vague and abstract: please tighten.
-information..configuration parameters..some optimality metric.¹ What
-monitoring information is used? Which configuration params are set (and why
-only those)? What optimality metrics? Give examples.}
+%\KComment{Sec 3.2 is rather vague and abstract: please tighten.
+%information..configuration parameters..some optimality metric.¹ What
+%monitoring information is used? Which configuration params are set (and why
+%only those)? What optimality metrics? Give examples.}
 
 The most important part of Koala is its dynamic scheduler.  The addition of this
 scheduler enables Koala to make better use of the available resources, and to
 respond to changing loads and system conditions.
 
-In Koala, we use the performance monitoring infrastructure to answer the
-question ``How well is our cloud performing'', and attempt to improve upon it by
-leveraging live migration to reallocate resources and improve the overall
-system.
+Koala's dynamic scheduler's primary output is a single migration that it
+believes will work towards improving the system.  In order to determine what a
+better configuration is, we define a score $Score(M,C)$ for monitoring
+information $M$ and a particular configuration $C$.  A higher score means a
+preferred configuration, one that makes better use of resources.  The scheduler
+uses this scoring metric to find a better configuration and work to get there.
 
-For a given configuration $C$ (assignment of instances to nodes), and
-monitoring information $M$, we define a score $Score(M,C)$ for the system.  This
-score represents how well the resources of our system are being utilized, and we
-define a higher score to mean a better resource allocation.
+When considering the maximum throughput of the system, we make some assumptions
+about the system.  One of these is that the system will perform best when each
+instance is given as many resources it needs, and that we can roughly estimate
+system performance as the integral of our scoring metric over time.  That is to
+say that getting an instance a needed resource earlier in its execution will
+make the system better, and that trades-off against the amount of resource
+needed and when it has it.  We believe this to be reasonable assumption to make
+about real-world tasks.
+\KComment{Word this better, and can we really claim 'reasonable'?}
+\KComment{I believe there's a name for this, continuous ..something?}
 
 \input{scheduler.tex}
 
-Koala has a parameterized scheduler.  The primary goal of the scheduler is to
-manage the assignment of VMs to nodes in an attempt to achieve a more desirable
-system.  The scheduler has two components, a static scheduler and the dynamic
-scheduler.  The static scheduler answers the question ``on which node should
-this instance start?'', while the dynamic scheduler answers the more
-complicated question ``Is there some migration that would result in a more
-optimal configuration?''.  The dynamic scheduler needs to take into account
-many things, such as the cost of migration and what it means to be an optimal
-configuration.  This is a challenge because distributed systems are hard to
-predict, especially when building a general scheduler.  Koala handles this in
-its scheduler by exposing the various weights and configuration knobs into
-scheduling parameters that can be changed at runtime to make decisions.  In
-exposing these parameters, we attempt to abstract as many assumptions as
-possible into configurable values that enable the scheduler to be as general it
-can be.
+The scoring metric we use is listed as Algorithm~\ref{algo:score} and the scheduler is
+listed as Algorithm~\ref{algo:sched}.  The scheduler runs every $T$ seconds (in
+practice we set $T$ to 30), and upon execution it looks through $D$ steps of
+(legal) migrations, and computes the scores of the resulting configurations.
+Taking into account a heuristic cost of migration $migrationCost$, it determines
+what the best next step is.  Each additional migration used to reach a desired
+configuration incurs an additional penalty.   This penalty can be used to
+prevent the algorithm from looking too far ahead and never making sufficient
+local progress.  At the moment since $D$ is small (we used $2$), we do not worry
+about the cost of intermediate configurations when determining what steps to
+take.  Setting parameters like $T$ and $D$ are something we defer to the
+learning scheduler: setting $D$ too small and we might too aggressively seek
+local optimums, too large and we might make constantly short-term bad decisions
+and never reach the ideal (perhaps the instance's jobs are done by then).  These
+complexities and those surrounding other parameters in our system motivate the
+learning scheduler to change them in response to observed longer-term
+performance feedback.
 
 \subsection{Live Migration}
 Live migration is the process of transparently moving a running VM between two
