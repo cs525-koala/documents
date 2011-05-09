@@ -61,54 +61,53 @@ location of other nodes.
 
 Both nodes taking part in migration need to have access to the VM image.  We set
 up a network file-system over NFS, where we store the VM images.  Accessing a VM
-image of the network is a very bandwidth expensive operation, so we utilized the
-Eucalyptus image caching functionality, in order to keep bandwidth costs of both
-operation and migration to a minimum.
+image off the network is a very bandwidth expensive operation, so we utilized
+the Eucalyptus image caching functionality, in order to keep bandwidth costs of
+both operation and migration to a minimum.
+
+Putting the disks backing the instances on shared storage is an important design
+decision.  Depending on the locking and caching of the filesystem, doing this
+might greatly hinder system performance for I/O intensive instances.  We hope to
+explore this trade-off more in the future, and perhaps look into ideas such as
+sending the disk contents on-demand, or making use of copy-on-write snapshots to
+increase performance for these workloads.
 
 \subsection{Scheduling}
 
-Currently, our scheduler is quite elementary and only exposes two thresholds,
-one to adjust the scheduling frequency, and one in which to optimize between
-throughput and energy efficiency.  Our model of throughput is currently built on
-the assumption that instances assigned to individual machines will perform
-better than the same number of instances on fewer machines, and our energy model
-is based on the assumption that instances assigned to individual machines on
-consume more energy than the same number of instances on fewer machines.  We
-will implement a much greater number of thresholds to implement.  One of these
-thresholds will adjust the VM densities and the hardware resources allocated to
-the specific VMs.  Another threshold would prioritize data locality over general
-computational throughput.  These knobs will allow us to modify the ways in which
-VMs are allocated, in terms of both allocations and migrations, in order to
-better meet the needs of the cluster.
+Our scheduler's implementation is primarily as described in
+Algorithm~\ref{algo:sched}, with some exceptions.
+\KComment{List these exceptions, or remove this subsection entirely}
 
 \subsection{Data Mining + Learning Algorithms}
 
-A lot of work has been done in the areas of data mining and machine learning.
-We intend to leverage this work by exposing various scheduling and machine
-events.  We will use established machine learning techniques to generate inputs
-for the thresholds in our scheduler in order to adapt to the properties of our
-workload and cluster.  A more optimized scheduler can better allocate the
-VMs to the resources of the cluster, and should achieve higher throughput.
+Our implementation presently does not make use of any learning algorithms,
+primarily due to lack of evaluation time.  An extensive evaluation is required
+to demonstrate the effectiveness of such algorithms, and to build a sufficiently
+large data set to train the learning on.  In the future, we will use established
+machine learning techniques to generate inputs for the thresholds in our
+scheduler in order to adapt to the properties a particular workload and cluster.
+We also expect to find the trade-off values we gather from such mining to be
+useful contributions to the literature.
 
-\subsection{Summary}
-
-Although both live migration and more advanced scheduling improve resource
-consumption on the cluster, these techniques are at a cost.  Live migration
-causes the nodes involved to incur the cost of managing the migration, as well
-as imposes a burden on the network while transferring across the related VM
-state.  The scheduling itself, particularly with the introduction of learning
-algorithms adds overhead to the cluster controller.  Finally, migration itself
-might incur some degraded performance in the guest machine.
-
-The actual computation cost of migration is very small in comparison to an
-instance running for an extended amount of time.  Detail of this can be found in
-our evaluation.  In addition to the performance gains, we gain the ability to
-switch the system to be optimized for energy efficiency on the fly.  The larger
-costs associated with Koala would be the analysis of the event data and the
-generation of decision trees and other comparable structures.  As our
-implementation permits, we plan to evaluate the trade-off between these
-computations and the benefits gained from more optimal scheduling.  It's
-important to note that many of these costs (what does it 'cost' to migrate a
-machine with respect to some optimality metric?) will be handled by Koala's
-learning dynamic scheduler, which we believe will help mitigate many of
-these costs.
+%\subsection{Summary}
+%
+%Although both live migration and more advanced scheduling improve resource
+%consumption on the cluster, these techniques are at a cost.  Live migration
+%causes the nodes involved to incur the cost of managing the migration, as well
+%as imposes a burden on the network while transferring across the related VM
+%state.  The scheduling itself, particularly with the introduction of learning
+%algorithms adds overhead to the cluster controller.  Finally, migration itself
+%might incur some degraded performance in the guest machine.
+%
+%The actual computation cost of migration is very small in comparison to an
+%instance running for an extended amount of time.  Detail of this can be found in
+%our evaluation.  In addition to the performance gains, we gain the ability to
+%switch the system to be optimized for energy efficiency on the fly.  The larger
+%costs associated with Koala would be the analysis of the event data and the
+%generation of decision trees and other comparable structures.  As our
+%implementation permits, we plan to evaluate the trade-off between these
+%computations and the benefits gained from more optimal scheduling.  It's
+%important to note that many of these costs (what does it 'cost' to migrate a
+%machine with respect to some optimality metric?) will be handled by Koala's
+%learning dynamic scheduler, which we believe will help mitigate many of
+%these costs.
