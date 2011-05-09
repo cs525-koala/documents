@@ -79,7 +79,7 @@ Algorithm~\ref{algo:sched}, with some exceptions.
 
 \subsection{Monitoring Infrastructure}
 
-Our monitoring infrastructure consists of a variety of scripts which get CPU utilization in both the instances and the Node Controllers.   This information is averaged over a period of 60 seconds and queried by the scheduler every 5 seconds.  We found that these two durations gave Koala the best balance between stability and reactivity.
+Our monitoring infrastructure consists of a variety of scripts which get CPU utilization in both the instances and the Node Controllers.   This information is averaged over a period of 60 seconds and queried by the scheduler every 5 seconds.  We found that these two durations gave Koala the best balance between stability and reactivity.  This is limited as CPU utilization is not a particularly useful indicator of resource contention.  In the future we will statistics on disk I/O usage, network consumption, and others.
 
 \subsection{Scoring Algorithm}
 
