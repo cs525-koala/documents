@@ -15,7 +15,7 @@
         \State $best = max(best,\{C',S\})$
         \If{$D > 1$} %\Comment{Look another step ahead}
         \State $\{C'',S\} \gets Schedule(M,C',D-1)$
-        \State $best = max(best,\{C', S - Penalty(\dots)\})$
+        \State $best = max(best,\{C', S - cost(\dots)\})$
         \EndIf
     \EndFor
     \State \textbf{return} $best$
