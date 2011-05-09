@@ -9,16 +9,16 @@
 %%why you absolutely need these different components. Give examples here to make
 %%the motivation clearer.}
 
-Koala's primary addition to Eucalyptus is its dynamic scheduler.  The scheduler
+Koala's primary addition to Eucalyptus is that of its dynamic scheduler.  The scheduler
 attempts to improve resource utilization by reallocating resources on-the-fly.
-To support this, Koala consists of two additional components: live migration
-support, and performance monitoring infrastructure.  Finally, to be general
-enough to be suitable for many deployments, but to still be aggressive for a
-particular environment, we add a learning algorithm.  This allows us to follow
-longer trends but still be responsive to small changes.
+In order to support this, Koala adds two components: live migration
+support, and performance monitoring infrastructure.  Finally, in order to be general
+enough for most deployments, but still be sufficiently aggressive for 
+particular environments, we utilize learning algorithms.  This will allow Koala's scheduler to account for
+longer trends, while still responding to small changes.
 
-Figure~\ref{fig:Koala} shows these components and where they fit into the
-overall system architecture, and we describe each of them below.
+Figure~\ref{fig:Koala} shows some of these components and how they fit into the
+overall system architecture.  We describe these components below.
 
 \scalefig{Koala}{0.9}{Koala System Overview}
 
@@ -28,24 +28,23 @@ overall system architecture, and we describe each of them below.
 %monitoring information is used? Which configuration params are set (and why
 %only those)? What optimality metrics? Give examples.}
 
-The most important part of Koala is its dynamic scheduler.  The addition of this
-scheduler enables Koala to make better use of the available resources, and to
+The core of Koala's design is a dynamic scheduler.  This
+scheduler enables Koala to better accommodate changing loads and system conditions, in order to best use the available resources.
 respond to changing loads and system conditions.
 
-Koala's dynamic scheduler's primary output is a single migration that it
-believes will work towards improving the system.  In order to determine what a
-better configuration is, we define a score $Score(M,C)$ for monitoring
-information $M$ and a particular configuration $C$.  A higher score means a
-preferred configuration, one that makes better use of resources.  The scheduler
-uses this scoring metric to find a better configuration and work to get there.
+The primary output of Koala's dynamic scheduler is a single migration order, which is intended to work towards improving the system.  In order to determine what a
+better configuration is, we define a score $Score(M,C)$ algorithm for monitoring
+information $M$ and a particular configuration $C$.  A higher score correlates to a
+preferred configuration, which better utilizes the system's resources.  The scheduler
+uses this scoring metric to find a better configuration and work to approach that configuration.
 
 When considering the maximum throughput of the system, we make some assumptions
 about the system.  One of these is that the system will perform best when each
-VM is given as many resources it needs, and that we can roughly estimate
+VM is given the resources it needs, and that we can roughly estimate
 system performance as the integral of our scoring metric over time.  That is to
 say that getting a VM a needed resource earlier in its execution will
-make the system better, and that trades-off against the amount of resource
-needed and when it has it.  We believe this to be reasonable assumption to make
+make the system better, which trades-off against the amount of resources
+needed and when the VM has those resources.  We believe this to be reasonable assumption to make
 about real-world tasks.
 \KComment{Word this better, and can we really claim 'reasonable'?}
 \KComment{I believe there's a name for this, continuous ..something?}
@@ -100,7 +99,12 @@ line~\ref{algo:scoremax}).
 %\KComment{WRITE ME}
 %
 %
-%\subsection{Dynamic Learning}
+\subsection{Dynamic Learning}
+As clouds increase in scale, the adding and removing of VMs will result in fragments of poorly allocated or completely unallocated resources.  Additionally, the execution patterns of the VMs are likely unique and will change unpredictably.  Even assuming that an optimal VM organization existed and was known by the scheduler, any form of migration has both a duration and a cost, and assuming the scheduler could reach this configuration before it changed simply is not reasonable.  One the other hand, by only considering configurations one migration away from the current configuration, the scheduler could become stuck at a locally optimum configuration.  The best way in which to approach an optimal configuration is non-deterministic, and the questions of if, when, where from, and where to issue a migration is an extremely complicated task.  
+
+As described in the scheduler's design section, there are many thresholds for which it is non-trivial to determine a value.  Machine learning algorithms were created for exactly this task.  When supplied with a sufficient set of training data, these algorithms can identify patterns, which can be correlated with desired or undesired behaviors.  In Koala, the training set would attempt to best model the situations where resource contention resulted in degraded performance, and attempt to configure the scheduler in ways what would avoid these situations.
+
+
 %\KComment{Sec 3.3 is abstract and says that Œit uses monitoring}
 %Given our parameterized scheduler, we have the task of setting the
 %configuration values to something reasonable for a particular system and set of
