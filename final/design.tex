@@ -1,11 +1,11 @@
 \section{Design}
 \label{sec:design}
 
-\Comment{In general, many parts of the design are not motivated: they are just
+\KComment{In general, many parts of the design are not motivated: they are just
 presented as is. This makes it difficult to convince the reader that the
 design decisions were in fact the best ones possible.}
 
-\Comment{Sec 3 presents several different components: it is not clear however
+\KComment{Sec 3 presents several different components: it is not clear however
 why you absolutely need these different components. Give examples here to make
 the motivation clearer.}
 
@@ -28,6 +28,7 @@ overall system architecture, and we describe each of them below.
 \scalefig{Koala}{0.9}{Koala System Overview}
 
 \subsection{Live Migration}
+\KComment{This burns me}
 Live migration is the process of transparently moving a running VM between two
 machines.  In Koala, in order to efficiently manage the resources of a cloud,
 we need to be able to move VMs around to put them in a desired configuration.
@@ -38,13 +39,73 @@ part of the Koala architecture, enabling the other components to dynamically
 manage the resources of the cluster.
 
 \subsection{Performance Monitoring}
-\Comment{WRITE ME}
+\KComment{WRITE ME}
 
 \subsection{Parameterized Scheduler}
-\Comment{Sec 3.2 is rather vague and abstract: please tighten.
+\KComment{Sec 3.2 is rather vague and abstract: please tighten.
 information..configuration parameters..some optimality metric.¹ What
 monitoring information is used? Which configuration params are set (and why
 only those)? What optimality metrics? Give examples.}
+
+The most important part of Koala is its dynamic scheduler.  The addition of this
+scheduler enables Koala to make better use of the available resources, and to
+respond to changing loads and system conditions.
+
+In Koala, we used the performance monitoring infrastructure to answer the
+question ``How well is our cloud performing'', and attempt to improve upon it by
+leveraging live migration to reallocate resources and improve the overall
+system.
+
+For a given configuration $C$ (assignment of instances to nodes), and
+monitoring information $M$, we define a score $Score(M,C)$ for the system.  This
+score represents how well the resources of our system are being utilized, and we
+define a higher score to mean a better resource allocation.
+
+Our scheduling algorithm then works as follows:
+
+\begin{algorithm}
+\caption{Koala's Scheduler}
+\label{algo:sched}
+\footnotesize
+\begin{algorithmic}
+\Procedure{Schedule}{$M$, $C$, $D$}
+    \State $best \gets \{C,Score(M,C)\}$%\Comment{Track best}
+    \ForAll{$Instances~I, Nodes~N$}
+        \State $C' \gets C : (I \gets N)$
+        \If{$isIllegal(C')$}
+            \State $skip$
+        \EndIf
+        \State $S \gets Score(M,C') - migrationCost(\dots)$
+        \State $best = max(best,\{C',S\})$
+        \If{$D > 1$} %\Comment{Look another step ahead}
+        \State $\{C'',S\} \gets Schedule(M,C',D-1)$
+        \State $best = max(best,\{C', S - Penalty(\dots)\})$
+        \EndIf
+    \EndFor
+    \State \textbf{return} $best$
+\EndProcedure
+\end{algorithmic}
+\normalsize
+\end{algorithm}
+
+The scoring function in Koala works as follows:
+
+\begin{algorithm}
+\caption{System Scoring}
+\label{algo:score}
+\footnotesize
+\begin{algorithmic}
+\Procedure{Score}{$M$, $C$}
+    \State $S \gets 0$
+    \ForAll{$Nodes~N, Resources~R$}
+        \State $C \gets M.theoryUsed(R,N) - M.avail(R,N)$
+        \State $S \gets S + max(C,0)$
+    \EndFor
+    \State \textbf{return} $S$
+\EndProcedure
+\end{algorithmic}
+\normalsize
+\end{algorithm}
 
 Koala has a parameterized scheduler.  The primary goal of the scheduler is to
 manage the assignment of VMs to nodes in an attempt to achieve a more desirable
@@ -63,7 +124,7 @@ possible into configurable values that enable the scheduler to be as general it
 can be.
 
 \subsection{Dynamic Learning}
-\Comment{Sec 3.3 is abstract and says that Œit uses monitoring}
+\KComment{Sec 3.3 is abstract and says that Œit uses monitoring}
 Given our parameterized scheduler, we have the task of setting the
 configuration values to something reasonable for a particular system and set of
 workloads, all of which might change dynamically.  We believe asking the user
