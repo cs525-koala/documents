@@ -9,18 +9,10 @@ design decisions were in fact the best ones possible.}
 why you absolutely need these different components. Give examples here to make
 the motivation clearer.}
 
-% MOTIVATE THIS $##%@##, don't just present it!
+\KComment{Add design intro}
 
-Koala builds upon Eucalyptus in four main ways.  First, Koala extends
-Eucalyptus by adding live migration, which serves as a fundamental building
-block for the other components.  Second, we added performance monitoring
-infrastructure to Koala that reports on the nodes and the instances. Third,
-Koala adds a dynamic parameterized scheduler to the cluster controller that
-leverages live migration and the monitoring information to achieve more
-desirably configurations on-the-fly.  Finally, to overcome the limitations of a
-hardcoded scheduler, Koala uses a dynamic learning algorithm to tune the
-parameters of the scheduler over time to improve the scheduling decisions to
-suit the workload.
+    Koala's primary addition to Eucalyptus is its dynamic scheduler.  The scheduler attempts to improve resource utilization by reallocating resources on-the-fly.  To support this, Koala consists of two additional components: live migration support, and performance monitoring infrastructure.
+
 
 Figure~\ref{fig:Koala} shows these components and where they fit into the
 overall system architecture, and we describe each of them below.
