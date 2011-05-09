@@ -1,8 +1,6 @@
 \section{Implementation}
 \label{sec:impl}
 
-\subsection{Live Migration}
-
 Koala builds upon Eucalyptus in four main ways.  First, Koala extends
 Eucalyptus by adding live migration, which serves as a fundamental building
 block for the other components.  Second, Koala contains performance monitoring
@@ -85,12 +83,12 @@ Algorithm~\ref{algo:sched}, with some exceptions.
 
 \subsection{Scoring Algorithm}
 
-\KComment{Talk about how we use CPU util to guesstimate cpu resource contention}
+Our scoring algorithm currently only utilizes CPU related information to score the configurations of the system.  As additional performance monitoring infrastructure is added, the respective components of the scoring algorithm will be added as well.
 
 \subsection{Data Mining + Learning Algorithms}
 
 Our implementation presently does not make use of any learning algorithms,
-primarily due to lack of evaluation time.  An extensive evaluation is required
+primarily due to lack of sufficient training time.  An extensive evaluation is required
 to demonstrate the effectiveness of such algorithms, and to build a sufficiently
 large data set to train the learning on.  In the future, we will use established
 machine learning techniques to generate inputs for the thresholds in our
