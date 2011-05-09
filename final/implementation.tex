@@ -3,11 +3,9 @@
 
 \subsection{Live Migration}
 
-%% WD: I feel like this is way too 'story'-y.  Is this a valid concern?
-
 Koala builds upon Eucalyptus in four main ways.  First, Koala extends
 Eucalyptus by adding live migration, which serves as a fundamental building
-block for the other components.  Second, we added performance monitoring
+block for the other components.  Second, Koala contains performance monitoring
 infrastructure to Koala that reports on the nodes and the instances. Third,
 Koala adds a dynamic parameterized scheduler to the cluster controller that
 leverages live migration and the monitoring information to achieve more
@@ -15,6 +13,9 @@ desirably configurations on-the-fly.  Finally, to overcome the limitations of a
 hardcoded scheduler, Koala uses a dynamic learning algorithm to tune the
 parameters of the scheduler over time to improve the scheduling decisions to
 suit the workload.
+
+\KComment{Describe allllll our important implementation details!!}
+\KComment{Do we want to talk about 'roadblocks' here? (Too story-ish?)}
 
 In the implementation of our project, we hit an unexpected roadblock.  Eucalyptus did not support live migration, a method for moving running VMs between nodes.  Unfortunately we had intended to utilize live migration heavily within our scheduler, so we set forth to implement it.  We modified Eucalyptus to support live migration.  This involved leveraging libvirt, the virtualization toolkit used by Eucalyptus, in order to perform the migration.  Additionally, extensive modification of Eucalyptus was required to communicate with libvirt and to manage its state during migration.  
 
